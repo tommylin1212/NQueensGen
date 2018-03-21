@@ -7,6 +7,7 @@
 class State {
 public:
 	State();
+	~State();
 	State(int* genes, int size);
 	void setCost();
 	int getCost();

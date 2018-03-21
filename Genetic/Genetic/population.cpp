@@ -24,13 +24,11 @@ Population::Population(int popSize,int boardSize,double mutation){
 }
 
 Population::~Population(){
-	for (int i = 0; i < m_size; i++) {
-		delete m_members[i];
-	}
+	delete[] m_members;
 }
 
-bool Population::evaluate(){
-	m_total = 0;
+bool Population::evaluate(){//checks if there is a winner and if there isn't
+	m_total = 0;//it prepares the totalCost for normalizing fitness
 	for (int i = 0; i < m_size; i++) {
 		if (m_members[i]->getCost() == 0) {
 			m_winner = m_members[i];
@@ -42,10 +40,10 @@ bool Population::evaluate(){
 }
 
 bool Population::fitness(){
-	if (evaluate()) {
+	if (evaluate()) {//if winner return
 		return true;
 	}
-	for (int i = 0; i < m_size; i++) {
+	for (int i = 0; i < m_size; i++) {//set fitness based on totalCost
 		double fitness=(m_members[i]->getCost()) / m_total;
 		m_members[i]->setFitness(fitness);
 	}
@@ -57,10 +55,10 @@ State * Population::getWinner(){
 }
 
 Population * Population::doGeneration(){
-	State** newGen = new State*[m_size];
+	State** newGen = new State*[m_size];//get new array pointer ready
 	for (int i = 0; i < m_size; i++) {
 		newGen[i] = selectMember()->crossover(selectMember());
-		if (((rand() % 1000) / 1000.0) < m_mutation) {
+		if (((rand() % 10000) / 10000.0) < m_mutation) {
 			newGen[i]->mutate();
 		}
 	}
@@ -70,7 +68,7 @@ Population * Population::doGeneration(){
 State * Population::selectMember(){
 	while (true) {
 		int index = rand() % m_size;
-		double probability = (rand() % 1000) / 1000.0;
+		double probability = (rand() % 10000) / 10000.0;
 		if (m_members[index]->getFitness() < probability) {
 			return m_members[index];
 		}

@@ -9,6 +9,9 @@ State::State(){
 	m_genes = NULL;
 	
 }
+State::~State(){
+	delete[] m_genes;
+}
 State::State(int * genes, int size){
 	this->m_genes = genes;
 	this->m_size = size;
