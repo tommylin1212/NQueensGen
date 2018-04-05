@@ -13,18 +13,23 @@ Population::Population(int size,State** members, double mutation){
 Population::Population(int popSize,int boardSize,double mutation){
 	m_size = popSize;
 	m_mutation = mutation;
-	m_members = new State*[m_size];
-	int* tempGenes = new int[boardSize];
+	m_members = new State*[m_size];//gets deleted in ~Population
+	int* tempGenes = new int[boardSize];//deleted in ~state
 	for (int i = 0; i < m_size; i++) {
 		for (int j = 0; j < boardSize; j++) {
 			tempGenes[j] = rand() % boardSize;
 		}
 		m_members[i] = new State(tempGenes, boardSize);
+		
 	}
 }
 
 Population::~Population(){
+	//for (int i = 0; i < m_size; i++){//i think i have a mem leak
+	//	delete[] m_members[i];
+	//}
 	delete[] m_members;
+	
 }
 
 bool Population::evaluate(){//checks if there is a winner and if there isn't
@@ -55,7 +60,7 @@ State * Population::getWinner(){
 }
 
 Population * Population::doGeneration(){
-	State** newGen = new State*[m_size];//get new array pointer ready
+	State** newGen = new State*[m_size];//get new array pointer ready, deleted in ~Pop
 	for (int i = 0; i < m_size; i++) {
 		newGen[i] = selectMember()->crossover(selectMember());
 		if (((rand() % 10000) / 10000.0) < m_mutation) {

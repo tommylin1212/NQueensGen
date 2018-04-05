@@ -5,8 +5,8 @@ using namespace std;
 
 int main(int argc,char** argv) {
 	srand(time(0));
-	int popsize = 2000;
-	int boardsize = 8;
+	int popsize = 20;
+	int boardsize = 8;//don't do more than 8 it uses 8 gigs Ram?
 	int generations = 1;
 	Population* currentPop = new Population(popsize,boardsize,0.1);
 	Population* temp;
@@ -24,5 +24,6 @@ int main(int argc,char** argv) {
 	State* winner= currentPop->getWinner();
 	winner->print();
 	cout << "Generations: " << generations << endl << "Individuals: " << generations*popsize<<endl;
-	
+	cin.get();
+	cin.get();
 }

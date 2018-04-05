@@ -68,7 +68,7 @@ void State::print(){
 }
 
 State* State::crossover(State* partner){
-	int* childGenes = new int[m_size];
+	int* childGenes = new int[m_size];//deleted in ~state
 	int index = rand() % m_size;
 	for (int i = 0; i < m_size; i++) {
 		if (i < index) {
